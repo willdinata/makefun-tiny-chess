@@ -3,7 +3,7 @@ V=(100,300,320,500,900,0)
 B=100000
 P='PNBRQK'
 U=str.isupper;L=str.lower
-T='jjjjjjjjttttttttllnppnllkkloolkkjjjnnjjjkihjjhikkllffllkjjjjjjjj' '`bddddb`bfjjjjfbdjlmmljddkmnnmkddjmnnmjddklmmlkdbfjkkjfb`bddddb`'+'j'*64+'j'*64+'j'*8+'k'*8+'j'*48+'fhhiihhfhjjjjjjhhjkkkkjhijkkkkjijjkkkkjihkkkkkjhhjkjjjjhfhhiihhf'
+T='j'*8+'t'*8+'llnppnllkkloolkkjjjnnjjjkihjjhikkllffllk'+'j'*8+'`bddddb`bfjjjjfbdjlmmljddkmnnmkddjmnnmjddklmmlkdbfjkkjfb`bddddb`'+'j'*64+'j'*64+'j'*64+'fhhiihhfhjjjjjjhhjkkkkjhijkkkkjijjkkkkjihkkkkkjhhjkjjjjhfhhiihhf'
 K=(17,15,10,6,-6,-10,-15,-17)
 D=(8,-8,1,-1,9,7,-7,-9)
 def f(s):
@@ -71,10 +71,10 @@ def r(s,m):
  b,w,r,e=s;a,t,_=m;c=b[t]if b[t]!='.' else 'p'
  return 10*V[P.index(c.upper())]-V[P.index(b[a].upper())]if b[t]!='.' or L(b[a])=='p' and t==e and a%8!=t%8 else-1
 class C(Exception):pass
-N=0
+N=0;KL=[0]*512
 def n(s,d,a,b,p):
  global N
- if N>3999:raise C
+ if N>5499:raise C
  N+=1;w=s[1];chk=h(s[0],s[0].index('K' if w else 'k'),not w);ms=list(l(s))
  if not ms:return(-B+p if chk else 0),None
  if d==0 and not chk:
@@ -82,11 +82,11 @@ def n(s,d,a,b,p):
   if z>=b:return z,None
   a=max(a,z);ms=[q for q in ms if r(s,q)>=0]
  best=-B;mv=None
- for q in sorted(ms,key=lambda q:r(s,q),reverse=True):
-  z=-n(m(s,q),max(0,d-1),-b,-a,p+1)[0]
+ for q in sorted(ms,key=lambda q:r(s,q)+50*(q==KL[p]),reverse=True):
+  z=-n(m(s,q),max(0,d-1+chk),-b,-a,p+1)[0]
   if z>best:best=z;mv=q
   a=max(a,z)
-  if a>=b:break
+  if a>=b:KL[p]=q;break
  return(a if d==0 and not chk else best),mv
 def c(s):
  global N
@@ -98,7 +98,7 @@ def c(s):
   except C:break
  a,t,p=z
  return f'{chr(97+a%8)}{8-a//8}{chr(97+t%8)}{8-t//8}{p}'
-def p(b,u,d):return J.load(Q.urlopen(Q.Request(b+u,J.dumps(d).encode(),{'Content-Type':'application/json'})))
+def p(b,u,d):return J.load(Q.urlopen(Q.Request(b+u,J.dumps(d).encode())))
 if __name__=='__main__' and(b:=O.getenv('MAKEFUN_ENV_URL')):
  b=b.rstrip('/')
  while(s:=p(b,'/game',{}))['status']!='done':
